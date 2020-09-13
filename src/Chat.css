@@ -24,3 +24,8 @@
 .chat__headerInfo > p{
     color: gray;
 }
+
+.chat__body{
+    flex: 1;
+    
+}

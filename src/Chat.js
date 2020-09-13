@@ -27,7 +27,14 @@ function Chat() {
                     </IconButton>
                 </div>
                 <div className="chat__body">
-                    
+                    <p>
+                        <span className="chat__name">Sonny</span>
+                        This is a message
+                        <span className="chat__timestamp">
+                            {new.Date().toUTCString()}
+                        </span>
+
+                    </p>
                 </div>
             </div>
         </div>
