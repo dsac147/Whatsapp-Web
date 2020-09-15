@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import "./Chat.css";
 import {Avatar , IconButton} from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -6,9 +6,27 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import MicIcon from '@material-ui/icons/Mic';
+import axios from './axios';
 
-function Chat() {
-    var d = new Date()
+function Chat({ messages }) {
+
+    var d = new Date();
+
+    const [input,setInput] = useState("");
+
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        await axios.post("/messages/new",
+            {
+                message: input,
+                name: "DEMO",
+                timestamp: `${d.getHours()}:${d.getMinutes()}`,
+                received: false
+            }
+        );
+        setInput("");
+    }
+    
     return (
         <div className="chat">
             <div className="chat__header">
@@ -30,33 +48,29 @@ function Chat() {
                 </div>
             </div>
             <div className="chat__body">
-                <p className="chat__message">
-                    <span className="chat__name">Sonny</span>
-                    This is a message
-                    <span className="chat__timestamp">
-                        {d.getHours()}:{d.getMinutes()}
-                    </span>
-                </p>
-                <p className="chat__message chat__receiver">
-                    <span className="chat__name">Sonny</span>
-                    This is a message
-                    <span className="chat__timestamp">
-                        {d.getHours()}:{d.getMinutes()}
-                    </span>
-                </p>
-                <p className="chat__message">
-                    <span className="chat__name">Sonny</span>
-                    This is a message
-                    <span className="chat__timestamp">
-                        {d.getHours()}:{d.getMinutes()}
-                    </span>
-                </p>
+
+                {messages.map((message) => (
+                    <p className={`chat__message ${message.received && "chat__receiver"}`}>
+                        <span className="chat__name">message.name</span>
+                        {message.message}
+                        <span className="chat__timestamp">
+                            {message.timestamp}
+                        </span>
+                    </p>
+                ))}
+
             </div>
             <div className="chat__footer">
                 <InsertEmoticonIcon/>
                 <form>
-                    <input type="text" placeholder="Type a message..."/>
-                    <button type="submit">Sens a message</button>
+                    <input value={input}
+                           onChange={(e) => setInput(e.target.value)}
+                           type="text"
+                           placeholder="Type a message..."
+                    />
+                    <button onClick={sendMessage}
+                            type="submit">Sens a message
+                    </button>
                 </form>
                 <MicIcon/>
             </div>
