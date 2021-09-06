@@ -16,6 +16,7 @@ MERN Stack Implementation of the Whastapp Web Platform built with help from the 
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [Pusher](https://pusher.com/)
 
+View the backend repo [here](https://github.com/dsac147/Whatsapp-Web-Backend). 
 
 
 
